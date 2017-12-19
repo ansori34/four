@@ -66,11 +66,10 @@ void fill(int rowIndex)
     if (status[i][rowIndex] == '\0') {
       status[i][rowIndex] = (turn) ? player1 : player2;
       count++;
+      turn = !turn;
       break;
     }
   }
-
-  turn = !turn;
 }
 
 int getScore(char player)
@@ -78,16 +77,23 @@ int getScore(char player)
   int score = 0;
 
   for (int i = 0; i < 4; i++) {
-    bool temp = true;
+    bool horizontal = true, vertical = true;
 
     for (int j = 0; j < 4; j++) {
+      if (status[j][i] != player) {
+        vertical = false;
+      }
+
       if (status[i][j] != player) {
-        temp = false;
-        break;
+        horizontal = false;
       }
     }
 
-    if (temp) {
+    if (horizontal) {
+      score++;
+    }
+
+    if (vertical) {
       score++;
     }
   }
